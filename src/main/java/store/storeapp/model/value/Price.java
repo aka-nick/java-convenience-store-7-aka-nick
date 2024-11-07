@@ -8,25 +8,25 @@ public class Price implements Comparable<Price> {
 
     private static final String PATTERN_OF_THOUSANDS_UNIT = "#,###";
 
-    private BigInteger amount;
+    private final BigInteger amount;
 
     public Price(BigInteger amount) {
         if (amount == null) {
-            PriceException.CANNOT_BE_INITIALIZED_TO_WRONG_VALUE.raise();
+            PriceException.CANNOT_BE_INITIALIZED_TO_NULL_VALUE.raise();
         }
         this.amount = amount;
     }
 
     public static Price of(Long amount) {
         if (amount == null) {
-            PriceException.CANNOT_BE_INITIALIZED_TO_WRONG_VALUE.raise();
+            PriceException.CANNOT_BE_INITIALIZED_TO_NULL_VALUE.raise();
         }
         return new Price(BigInteger.valueOf(amount));
     }
 
     public static Price of(Integer amount) {
         if (amount == null) {
-            PriceException.CANNOT_BE_INITIALIZED_TO_WRONG_VALUE.raise();
+            PriceException.CANNOT_BE_INITIALIZED_TO_NULL_VALUE.raise();
         }
         return of(Long.valueOf(amount));
     }
@@ -93,9 +93,8 @@ public class Price implements Comparable<Price> {
 
     private enum PriceException {
 
-        CANNOT_BE_INITIALIZED_TO_WRONG_VALUE(() -> {
-            throw new IllegalArgumentException(String.format(
-                    "가격은 %d ~ %d의 정수로 초기화할 수 있습니다.", Won.MIN_VALUE, Won.MAX_VALUE));
+        CANNOT_BE_INITIALIZED_TO_NULL_VALUE(() -> {
+            throw new IllegalArgumentException("가격은 null로 초기화할 수 없습니다.");
         }),
         NULL_CANNOT_BE_ENTERED(() -> {
             throw new IllegalArgumentException("null이 입력될 수 없습니다.");

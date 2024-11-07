@@ -2,8 +2,8 @@ package store.storeapp.model.value;
 
 public class Period {
 
-    private Date fromDate;
-    private Date toDate;
+    private final Date fromDate;
+    private final Date toDate;
 
     public Period(Date fromDate, Date toDate) {
         this.fromDate = fromDate;
