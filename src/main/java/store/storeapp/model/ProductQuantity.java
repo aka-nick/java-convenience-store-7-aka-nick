@@ -17,14 +17,14 @@ public final class ProductQuantity {
     public ProductQuantity minus(Quantity purcharsedQuantity) {
         thrownByNullParams(purcharsedQuantity);
         thrownByUnableMinusCalculation(purcharsedQuantity.get());
-        quantity = new Quantity(quantity.get() - purcharsedQuantity.get());
+        quantity = Quantity.of(quantity.get() - purcharsedQuantity.get());
         return this;
     }
 
     public Integer minus(Integer purchasedQuantity) {
         thrownByNullParams(purchasedQuantity);
         thrownByUnableMinusCalculation(purchasedQuantity);
-        quantity = new Quantity(quantity.get() - purchasedQuantity);
+        quantity = Quantity.of(quantity.get() - purchasedQuantity);
         return quantity.get();
     }
 

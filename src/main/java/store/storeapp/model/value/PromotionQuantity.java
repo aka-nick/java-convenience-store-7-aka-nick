@@ -16,7 +16,7 @@ public class PromotionQuantity {
         if (requiredForApply == null || providedByPromotion == null) {
             PromotionQuantityException.CANNOT_BE_INITIALIZED_TO_EMPTY.raise();
         }
-        if (requiredForApply.equals(new Quantity(0)) || providedByPromotion.equals(new Quantity(0))) {
+        if (requiredForApply.equals(Quantity.of(0)) || providedByPromotion.equals(Quantity.of(0))) {
             PromotionQuantityException.CANNOT_BE_INITIALIZED_TO_EMPTY.raise();
         }
         return new PromotionQuantity(requiredForApply, providedByPromotion);

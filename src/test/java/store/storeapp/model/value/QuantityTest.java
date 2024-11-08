@@ -13,14 +13,14 @@ class QuantityTest {
     @DisplayName("수량은 0 또는 양의 정수로 초기화 가능하다.")
     @Test
     void initialize() {
-        assertThatCode(() -> new Quantity(0))
+        assertThatCode(() -> Quantity.of(0))
                 .doesNotThrowAnyException();
-        assertThatCode(() -> new Quantity(1))
+        assertThatCode(() -> Quantity.of(1))
                 .doesNotThrowAnyException();
 
-        assertThatCode(() -> new Quantity(-1))
+        assertThatCode(() -> Quantity.of(-1))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatCode(() -> new Quantity(null))
+        assertThatCode(() -> Quantity.of(null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -28,17 +28,17 @@ class QuantityTest {
     @ParameterizedTest
     @CsvSource({"1,2,-1", "2,1,1", "1,1,0"})
     void compareTo(int left, int right, int expected) {
-        Quantity leftQuantity = new Quantity(left);
-        Quantity rightQuantity = new Quantity(right);
+        Quantity leftQuantity = Quantity.of(left);
+        Quantity rightQuantity = Quantity.of(right);
         assertThat(leftQuantity.compareTo(rightQuantity)).isEqualTo(expected);
     }
 
     @DisplayName("수량은 동등비교 가능하다")
     @Test
     void equals() {
-        Quantity origin = new Quantity(1);
-        Quantity sameValue = new Quantity(1);
-        Quantity diffValue = new Quantity(2);
+        Quantity origin = Quantity.of(1);
+        Quantity sameValue = Quantity.of(1);
+        Quantity diffValue = Quantity.of(2);
 
         assertThat(origin.equals(sameValue)).isTrue();
         assertThat(origin.equals(diffValue)).isFalse();

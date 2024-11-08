@@ -9,7 +9,7 @@ public class Quantity implements Comparable<Quantity> {
 
     private final Integer quantity;
 
-    public Quantity(Integer quantity) {
+    private Quantity(Integer quantity) {
         if (quantity == null) {
             QuantityException.NULL_CANNOT_BE_ENTERED.raise();
         }
@@ -17,6 +17,13 @@ public class Quantity implements Comparable<Quantity> {
             QuantityException.CANNOT_BE_INITIALIZED_TO_WRONG_VALUE.raise();
         }
         this.quantity = quantity;
+    }
+
+    public static Quantity of(Integer quantity) {
+        if (quantity == null) {
+            QuantityException.NULL_CANNOT_BE_ENTERED.raise();
+        }
+        return Quantity.of(quantity);
     }
 
     @Override

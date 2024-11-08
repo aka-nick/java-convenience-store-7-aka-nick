@@ -14,11 +14,10 @@ public class PromotionName extends Name {
             ProductNameException.CANNOT_BE_INITIALIZED_TO_EMPTY.raise();
         }
 
-        name = name.strip();
-        if (MAX_LENGTH_OF_PROMOTION_NAME < name.length()) {
+        if (MAX_LENGTH_OF_PROMOTION_NAME < name.strip().length()) {
             ProductNameException.NAME_IS_TOO_LONG.raise();
         }
-        return new PromotionName(name);
+        return new PromotionName(name.strip());
     }
 
     private enum ProductNameException {
