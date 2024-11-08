@@ -1,5 +1,6 @@
 package store.storeapp.model.value;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
@@ -37,6 +38,32 @@ class PromotionTest {
                 PromotionQuantity.of(Quantity.of(1), Quantity.of(0)),
                 Period.of("2020-01-01", "2030-01-01")))
                 .isInstanceOf(IllegalArgumentException.class); // 증정수량 제로
+    }
+
+    @DisplayName("프로모션 기간 내면 true를 아니면 false를 반환한다.")
+    @Test
+    void isPromotionPeriod() {
+        Promotion promotion = Promotion.of(PromotionName.of("테스트행사"),
+                PromotionQuantity.of(Quantity.of(2), Quantity.of(1)),
+                Period.of("2020-01-01", "2030-01-01"));
+
+        assertThat(promotion.isPromotionPeriod(Date.from("2010-01-01"))).isFalse();
+        assertThat(promotion.isPromotionPeriod(Date.from("2025-01-01"))).isTrue();
+        assertThat(promotion.isPromotionPeriod(Date.from("2040-01-01"))).isFalse();
+    }
+
+    @DisplayName("현재 구매수량이"
+            + "프로모션 적용에 필요한 구매수량보다 같거나 더 크면"
+            + "true를, 아니면 false를 반환한다.")
+    @Test
+    void isSatisfyForPromotionRequiredQuantity() {
+        Promotion promotion = Promotion.of(PromotionName.of("테스트행사"),
+                PromotionQuantity.of(Quantity.of(2), Quantity.of(1)),
+                Period.of("2020-01-01", "2030-01-01"));
+
+        assertThat(promotion.isSatisfyForPromotionRequiredQuantity(Quantity.of(3))).isTrue();
+        assertThat(promotion.isSatisfyForPromotionRequiredQuantity(Quantity.of(2))).isTrue();
+        assertThat(promotion.isSatisfyForPromotionRequiredQuantity(Quantity.of(1))).isFalse();
     }
 
 }

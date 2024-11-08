@@ -14,4 +14,8 @@ public record Promotion(PromotionName name, PromotionQuantity quantity, Period p
         return period.include(now);
     }
 
+    public boolean isSatisfyForPromotionRequiredQuantity(Quantity purchased) {
+        return quantity.isRequiredQuantityLessThanOrEqual(purchased);
+    }
+
 }

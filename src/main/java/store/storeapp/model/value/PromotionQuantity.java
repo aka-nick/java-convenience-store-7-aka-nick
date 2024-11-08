@@ -22,6 +22,10 @@ public class PromotionQuantity {
         return new PromotionQuantity(requiredForApply, providedByPromotion);
     }
 
+    public boolean isRequiredQuantityLessThanOrEqual(Quantity purchased) {
+        return requiredForApply.compareTo(purchased) <= 0;
+    }
+
     public Quantity requiredForApply() {
         return requiredForApply;
     }

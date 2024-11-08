@@ -23,7 +23,7 @@ public class Quantity implements Comparable<Quantity> {
         if (quantity == null) {
             QuantityException.NULL_CANNOT_BE_ENTERED.raise();
         }
-        return Quantity.of(quantity);
+        return new Quantity(quantity);
     }
 
     @Override
