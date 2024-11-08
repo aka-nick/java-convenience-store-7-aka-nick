@@ -19,6 +19,10 @@ public record Date(LocalDate date) implements Comparable<Date> {
         return new Date(LocalDate.parse(dateString));
     }
 
+    public static Date now() {
+        return new Date(LocalDate.now());
+    }
+
     public boolean isAfterThan(Date other) {
         return this.compareTo(other) > 0;
     }
