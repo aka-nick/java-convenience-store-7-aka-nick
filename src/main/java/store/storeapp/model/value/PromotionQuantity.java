@@ -26,6 +26,10 @@ public class PromotionQuantity {
         return requiredForApply.compareTo(purchased) <= 0;
     }
 
+    public Quantity calculateQuantityProvidedAtOnce() {
+        return requiredForApply.add(providedByPromotion);
+    }
+
     public Quantity requiredForApply() {
         return requiredForApply;
     }

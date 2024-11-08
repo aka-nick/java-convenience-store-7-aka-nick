@@ -3,6 +3,7 @@ package store.storeapp.model.value;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +32,14 @@ class PromotionQuantityTest {
         assertThat(required10.isRequiredQuantityLessThanOrEqual(purchased2)).isFalse();
         assertThat(required10.isRequiredQuantityLessThanOrEqual(purchased10)).isTrue();
         assertThat(required1.isRequiredQuantityLessThanOrEqual(purchased2)).isTrue();
+    }
+
+    @DisplayName("한번의 프로모션으로 제공되어야 할 프로모션 상품 수량을 계산하여 반환가능하다")
+    @Test
+    void calculateQuantityProvidedAtOnce() {
+        PromotionQuantity promotionQuantity = PromotionQuantity.of(Quantity.of(1), Quantity.of(1));
+
+        Assertions.assertThat(promotionQuantity.calculateQuantityProvidedAtOnce()).isEqualTo(Quantity.of(2));
     }
 
 }
