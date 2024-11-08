@@ -66,4 +66,14 @@ class PromotionTest {
         assertThat(promotion.isSatisfyForPromotionRequiredQuantity(Quantity.of(1))).isFalse();
     }
 
+    @DisplayName("한번의 프로모션으로 제공되어야 할 상품 수량(프로모션 적용 필요 수량 + 증정 수량)을 조회할 수 있다.")
+    @Test
+    void getQuantityProvidedAtOnce() {
+        Promotion promotion = Promotion.of(PromotionName.of("테스트행사"),
+                PromotionQuantity.of(Quantity.of(2), Quantity.of(1)),
+                Period.of("2020-01-01", "2030-01-01"));
+
+        assertThat(promotion.getQuantityProvidedAtOnce()).isEqualTo(Quantity.of(3));
+    }
+
 }

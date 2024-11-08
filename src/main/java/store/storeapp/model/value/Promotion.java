@@ -18,4 +18,8 @@ public record Promotion(PromotionName name, PromotionQuantity quantity, Period p
         return quantity.isRequiredQuantityLessThanOrEqual(purchased);
     }
 
+    public Quantity getQuantityProvidedAtOnce() {
+        return quantity.calculateQuantityProvidedAtOnce();
+    }
+
 }
