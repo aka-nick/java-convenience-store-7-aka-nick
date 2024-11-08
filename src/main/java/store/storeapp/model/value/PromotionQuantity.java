@@ -31,14 +31,14 @@ public class PromotionQuantity {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
+    public boolean equals(Object other) {
+        if (other == this) {
             return true;
         }
-        if (obj == null || obj.getClass() != this.getClass()) {
+        if (other == null || other.getClass() != this.getClass()) {
             return false;
         }
-        var that = (PromotionQuantity) obj;
+        var that = (PromotionQuantity) other;
         return Objects.equals(this.requiredForApply, that.requiredForApply) &&
                 Objects.equals(this.providedByPromotion, that.providedByPromotion);
     }

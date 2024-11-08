@@ -1,13 +1,9 @@
-package store.storeapp.model;
+package store.storeapp.model.value;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import store.storeapp.model.value.Period;
-import store.storeapp.model.value.PromotionName;
-import store.storeapp.model.value.PromotionQuantity;
-import store.storeapp.model.value.Quantity;
 
 class PromotionTest {
 

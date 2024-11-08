@@ -1,23 +1,59 @@
 package store.storeapp.model.value;
 
-public record Quantity(Integer quantity) implements Comparable<Quantity> {
+import java.text.DecimalFormat;
+import java.util.Objects;
 
-    public Quantity {
+public class Quantity implements Comparable<Quantity> {
+
+    private static final String PATTERN_OF_THOUSANDS_UNIT = "#,###";
+
+    private final Integer quantity;
+
+    public Quantity(Integer quantity) {
         if (quantity == null) {
             QuantityException.NULL_CANNOT_BE_ENTERED.raise();
         }
         if (quantity < 0) {
             QuantityException.CANNOT_BE_INITIALIZED_TO_WRONG_VALUE.raise();
         }
+        this.quantity = quantity;
     }
 
     @Override
-    public int compareTo(Quantity o) {
-        if (o == null) {
+    public int compareTo(Quantity other) {
+        if (other == null) {
             QuantityException.NULL_CANNOT_BE_ENTERED.raise();
         }
-        return this.quantity.compareTo(o.quantity());
+        return this.quantity.compareTo(other.get());
     }
+
+    public Integer get() {
+        return quantity;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        var that = (Quantity) obj;
+        return Objects.equals(this.quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(quantity);
+    }
+
+    @Override
+    public String toString() {
+        return new DecimalFormat(PATTERN_OF_THOUSANDS_UNIT)
+                .format(quantity);
+    }
+
 
     private enum QuantityException {
 
