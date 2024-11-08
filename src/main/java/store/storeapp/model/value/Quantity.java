@@ -26,6 +26,10 @@ public class Quantity implements Comparable<Quantity> {
         return new Quantity(quantity);
     }
 
+    public Quantity add(Quantity other) {
+        return new Quantity(this.quantity + other.quantity);
+    }
+
     @Override
     public int compareTo(Quantity other) {
         if (other == null) {

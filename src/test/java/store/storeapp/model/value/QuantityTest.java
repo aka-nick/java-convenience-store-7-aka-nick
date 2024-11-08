@@ -44,4 +44,11 @@ class QuantityTest {
         assertThat(origin.equals(diffValue)).isFalse();
     }
 
+    @DisplayName("수량은 더하기 연산이 가능하다")
+    @Test
+    void add() {
+        assertThat(Quantity.of(3).add(Quantity.of(5)))
+                .isEqualTo(Quantity.of(8));
+    }
+
 }
