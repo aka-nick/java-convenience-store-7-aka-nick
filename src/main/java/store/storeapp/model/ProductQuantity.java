@@ -28,6 +28,10 @@ public final class ProductQuantity {
         return quantity.get();
     }
 
+    public boolean isGreaterThanOrEqualTo(Quantity other) {
+        return quantity.isGreaterThan(other) || quantity.equals(other);
+    }
+
     private static void thrownByNullParams(Quantity purchasedQuantity) {
         if (purchasedQuantity == null) {
             ProductQuantityException.NULL_CANNOT_BE_ENTERED.raise();

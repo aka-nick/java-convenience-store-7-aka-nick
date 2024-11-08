@@ -34,4 +34,17 @@ class ProductQuantityTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("상품수량은 다른 수량과 더 크거나 같은지 비교 가능하다")
+    @Test
+    void isGreaterThanOrEqualTo() {
+        ProductQuantity productQuantity = new ProductQuantity(Quantity.of(10));
+        Quantity smaller = Quantity.of(9);
+        Quantity same = Quantity.of(10);
+        Quantity bigger = Quantity.of(11);
+
+        assertThat(productQuantity.isGreaterThanOrEqualTo(smaller)).isTrue();
+        assertThat(productQuantity.isGreaterThanOrEqualTo(same)).isTrue();
+        assertThat(productQuantity.isGreaterThanOrEqualTo(bigger)).isFalse();
+    }
+
 }
