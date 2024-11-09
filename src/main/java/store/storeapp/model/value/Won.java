@@ -44,7 +44,15 @@ public class Won implements Comparable<Won> {
         return new Won(amount.add(won.amount));
     }
 
-    public Won divideWon(Won won) {
+    public Won minus(Won other) {
+        return new Won(amount.subtract(other.amount));
+    }
+
+    public Won minus(Integer other) {
+        return minus(Won.of(other));
+    }
+
+    public Won divide(Won won) {
         return new Won(amount.divide(won.amount));
     }
 
@@ -56,7 +64,7 @@ public class Won implements Comparable<Won> {
         return amount.divide(BigInteger.valueOf(operand)).longValue();
     }
 
-    public Won reminderWon(Won won) {
+    public Won reminder(Won won) {
         return new Won(amount.remainder(won.amount));
     }
 

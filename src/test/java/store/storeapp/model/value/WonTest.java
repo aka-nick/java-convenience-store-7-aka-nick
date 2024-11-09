@@ -36,7 +36,7 @@ class WonTest {
         Long operandLong = 2L;
         Integer operandInteger = 2;
 
-        assertThat(origin.divideWon(operandWon)).isEqualTo(Won.of(50L));
+        assertThat(origin.divide(operandWon)).isEqualTo(Won.of(50L));
         assertThat(origin.divide(operandLong)).isEqualTo(50L);
         assertThat(origin.divide(operandInteger)).isEqualTo(50L);
     }
@@ -49,7 +49,7 @@ class WonTest {
         Long operandLong = 30L;
         Integer operandInteger = 30;
 
-        assertThat(origin.reminderWon(operandWon)).isEqualTo(Won.of(10L));
+        assertThat(origin.reminder(operandWon)).isEqualTo(Won.of(10L));
         assertThat(origin.reminder(operandLong)).isEqualTo(10L);
         assertThat(origin.reminder(operandInteger)).isEqualTo(10L);
     }
