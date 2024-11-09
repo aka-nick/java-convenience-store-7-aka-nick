@@ -17,6 +17,13 @@ public class Price implements Comparable<Price> {
         this.amount = amount;
     }
 
+    public static Price of(Won amount) {
+        if (amount == null) {
+            PriceException.CANNOT_BE_INITIALIZED_TO_NULL_VALUE.raise();
+        }
+        return new Price(amount.get());
+    }
+
     public static Price of(Long amount) {
         if (amount == null) {
             PriceException.CANNOT_BE_INITIALIZED_TO_NULL_VALUE.raise();
