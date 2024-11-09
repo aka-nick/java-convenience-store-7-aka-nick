@@ -50,7 +50,7 @@ lotto
             - [x] `프로모션`은 `프로모션명`, `프로모션수량(구매/증정)`, `(행사시작/종료)기간`으로 이루어진다.
             - [x] `상품수량`은 상품의 판매 가능한 재고로써 0 또는 양의정수다.
             - [x] `상품수량`은 결제요청된 상품 개수로 인해 차감될 수 있다. 0 이하로 차감될 수는 없다.
-        - [ ] `상품`은 현재구매건의 구매수량이 재고수량을 초과하지 않았는지 판단하여 알릴 수 있다.
+        - [x] `상품`은 현재구매건의 구매수량이 남은 재고수량을 초과하면 예외를 발생한다.
         - [x] `상품`은 `프로모션` 적용 여부를 계산한다.
             - [x] `프로모션` 적용 여부는 다음 조건들을 가진다.
                 - [x] `프로모션 기간` 내에
@@ -118,12 +118,28 @@ lotto
     - (근거가 되는 문구)
 ```
 
-- `멤버십 할인`이 적용되는 금액은 '프로모션이 들어가지 않는 상품의 구매금액 총합의 30%(최대 8000원)'이다.
-    - **프로모션 미적용 금액의 30%**를 할인
-    - 최대 한도는 8,000원
-    - 예시 중: `- 에너지바 2,000원 5개`(프로모션 없음) / `에너지바 5 10,000`(해당 상품 구매액) / `멤버십할인 -3,000`(할인액 = 10,000 * 0.3)
+- 혼동이 오기 쉬운 프로모션 진행을 순서도로 정리한다.
+    - (참고)프로모션 진행의 대전제: 프로모션이 적용되든 안되든 프로모션 재고부터 소진한다.
 
-의 형태로 기록한다.
+```mermaid
+flowchart TD
+    promoStart[프로모션 적용 판단] --> promoCheck{프로모션적용기준 이상으로 구매했으며,<br>증정품을 줄 수 있을만큼 프로모션 재고가 있는가?<br>if: required <= purchased && provided <= stock}
+    promoCheck -- true --> savedStockCheck["프로모션 재고가 구매요청된 수량을 모두 수용할 수 있는지를 저장<br>stockCheck = (purchase <= stock)"]
+    promoCheck -- false --> promoEnd[프로모션 적용 끝]
+    savedStockCheck --> stockCheckIsTrue{if: stockCheck}
+    stockCheckIsTrue -- true --> calcGiftCountByPurchase[받을 수 있는 증정 수 계산<br>giftCount = purchased / required + provided]
+    stockCheckIsTrue -- false --> calcGiftCountByStock[줄 수 있는 증정 수 계산<br>giftCount = stock / required + provided]
+    calcGiftCountByPurchase --> calcedGiftCount[giftCount 계산됨]
+    calcGiftCountByStock --> calcedGiftCount[giftCount 계산됨]
+    calcedGiftCount --> reflectPurchaseByGift["판매수량 처리<br>sellingProductQuantity += giftCount * (required + provided)<br>purchase -= giftCount * (required + provided)<br>sellAmount += giftCount * required<br>giftAmount += giftCount * provided"]
+    reflectPurchaseByGift --> reflectStockByGift["재고수량 처리<br>stock -= giftCount * (required + provided)"]
+    reflectStockByGift --> promoRecheck{추가증정이 가능한가?<br>if: required == purchased && provided <= stock}
+    promoRecheck -- true --> askBringMore{if: 더 가져올건지 묻기}
+    promoRecheck -- false --> promoEnd
+    askBringMore -- Y --> reflectPurchaseByMoreGift["sellingProductQuantity += provided<br>purchase -= provided<br>giftAmount += provided"]
+    askBringMore -- N --> promoEnd
+    reflectPurchaseByMoreGift --> promoEnd
+```
 
 ## 4. 애매한 동작에 대한 커스텀 규칙 정의
 
@@ -143,3 +159,15 @@ lotto
     - 전혀 없다. 하지만 너무 길어질 경우 유저 인터페이스를 사실상 망가뜨린다.
     - 참고할 아무런 기준이 없지만, 주관적인 판단으로 **상품명은 15자로 제한**한다.
     - 비슷한 이유로 **프로모션명은 20자로 제한**한다. 상품명에 비해서 상대적으로 길기 때문이다.
+- `멤버십 할인`이 적용되는 금액은 '프로모션이 들어가지 않는 상품의 구매금액 총합의 30%(최대 8000원)'이다.
+    - **프로모션 미적용 금액의 30%**를 할인
+    - 최대 한도는 8,000원
+    - 예시 중: `- 에너지바 2,000원 5개`(프로모션 없음) / `에너지바 5 10,000`(해당 상품 구매액) / `멤버십할인 -3,000`(할인액 = 10,000 * 0.3)
+
+의 형태로 기록한다.
+
+- 프로모션이 적용된 나머지 중 프로모션 적용 기준수량에 미치지 못하여 일반 판매되는 수량에 대하여, 프로모션 재고에서 차감해야 하는지, 일반 재고에서 차감해야 하는지?
+    - 프로모션 재고에서 차감한다.
+    - 명확히 어떻게 해야한다고 제한된 문장은 없다.
+    - 하지만 프로모션 재고와 일반 재고가 있다면 프로모션을 먼저 소진하는 것이 상식적이고,
+    - 예시를 보아서도 그렇게 동작하는 듯 판단된다.
