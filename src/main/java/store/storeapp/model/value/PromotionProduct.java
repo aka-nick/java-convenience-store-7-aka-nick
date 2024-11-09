@@ -2,13 +2,13 @@ package store.storeapp.model.value;
 
 import java.util.Objects;
 
-public record GiftProduct(ProductName name, Quantity quantity) implements Comparable<GiftProduct> {
+public record PromotionProduct(ProductName name, Quantity quantity) implements Comparable<PromotionProduct> {
 
-    public static GiftProduct of(ProductName name, Quantity quantity) {
+    public static PromotionProduct of(ProductName name, Quantity quantity) {
         if (name == null || quantity == null) {
             GiftProductException.CANNOT_BE_INITIALIZED_TO_NULL_VALUE.raise();
         }
-        return new GiftProduct(name, quantity);
+        return new PromotionProduct(name, quantity);
     }
 
     @Override
@@ -19,7 +19,7 @@ public record GiftProduct(ProductName name, Quantity quantity) implements Compar
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        GiftProduct that = (GiftProduct) other;
+        PromotionProduct that = (PromotionProduct) other;
         return Objects.equals(name, that.name);
     }
 
@@ -29,7 +29,7 @@ public record GiftProduct(ProductName name, Quantity quantity) implements Compar
     }
 
     @Override
-    public int compareTo(GiftProduct other) {
+    public int compareTo(PromotionProduct other) {
         if (other == null) {
             GiftProductException.NULL_CANNOT_BE_ENTERED.raise();
         }
