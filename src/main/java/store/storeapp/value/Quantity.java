@@ -5,6 +5,9 @@ import java.util.Objects;
 
 public class Quantity implements Comparable<Quantity> {
 
+    public static final Quantity ZERO = new Quantity(0);
+    public static final Quantity ONE = new Quantity(1);
+
     private static final String PATTERN_OF_THOUSANDS_UNIT = "#,###";
 
     private final Integer quantity;
