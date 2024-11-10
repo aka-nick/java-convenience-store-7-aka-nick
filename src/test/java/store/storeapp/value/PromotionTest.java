@@ -92,4 +92,35 @@ class PromotionTest {
                         Period.of("2020-01-01", "2030-01-01")));
     }
 
+    @DisplayName("프로모션이 비어있는지 진위판단 가능하다")
+    @Test
+    void isEmpty() {
+        assertThat(Promotion.of(
+                        PromotionName.of("테스트프로모션"),
+                        PromotionQuantity.of(Quantity.of(2), Quantity.of(1)),
+                        Period.of("2020-01-01", "2030-01-01"))
+                .isEmpty())
+                .isFalse();
+
+        assertThat(Promotion.empty().isEmpty()).isTrue();
+        assertThat(Promotion.of(
+                        null,
+                        PromotionQuantity.of(Quantity.of(2), Quantity.of(1)),
+                        Period.of("2020-01-01", "2030-01-01"))
+                .isEmpty())
+                .isTrue();
+        assertThat(Promotion.of(
+                        PromotionName.of("테스트프로모션"),
+                        null,
+                        Period.of("2020-01-01", "2030-01-01"))
+                .isEmpty())
+                .isTrue();
+        assertThat(Promotion.of(
+                        PromotionName.of("테스트프로모션"),
+                        PromotionQuantity.of(Quantity.of(2), Quantity.of(1)),
+                        null)
+                .isEmpty())
+                .isTrue();
+    }
+
 }
