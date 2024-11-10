@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 import store.config.data.CsvFileDataReader;
 import store.storeapp.model.Product;
 import store.storeapp.model.ProductQuantity;
-import store.storeapp.model.value.Period;
-import store.storeapp.model.value.Price;
-import store.storeapp.model.value.ProductName;
-import store.storeapp.model.value.Promotion;
-import store.storeapp.model.value.PromotionName;
-import store.storeapp.model.value.PromotionQuantity;
-import store.storeapp.model.value.Quantity;
+import store.storeapp.value.Period;
+import store.storeapp.value.Price;
+import store.storeapp.value.ProductName;
+import store.storeapp.value.Promotion;
+import store.storeapp.value.PromotionName;
+import store.storeapp.value.PromotionQuantity;
+import store.storeapp.value.Quantity;
 
 public final class StoreDataReader {
 

@@ -5,13 +5,13 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import store.storeapp.model.value.Period;
-import store.storeapp.model.value.Price;
-import store.storeapp.model.value.ProductName;
-import store.storeapp.model.value.Promotion;
-import store.storeapp.model.value.PromotionName;
-import store.storeapp.model.value.PromotionQuantity;
-import store.storeapp.model.value.Quantity;
+import store.storeapp.value.Period;
+import store.storeapp.value.Price;
+import store.storeapp.value.ProductName;
+import store.storeapp.value.Promotion;
+import store.storeapp.value.PromotionName;
+import store.storeapp.value.PromotionQuantity;
+import store.storeapp.value.Quantity;
 
 class ProductTest {
 

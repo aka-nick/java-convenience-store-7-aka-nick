@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import store.storeapp.model.value.Price;
-import store.storeapp.model.value.Won;
+import store.storeapp.value.Price;
+import store.storeapp.value.Won;
 
 class MembershipDiscountPriceTest {
 

@@ -1,6 +1,6 @@
 package store.storeapp.model;
 
-import store.storeapp.model.value.Quantity;
+import store.storeapp.value.Quantity;
 
 public final class ProductQuantity {
 

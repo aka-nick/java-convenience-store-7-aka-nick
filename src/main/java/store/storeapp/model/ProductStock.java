@@ -3,7 +3,7 @@ package store.storeapp.model;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
-import store.storeapp.model.value.ProductName;
+import store.storeapp.value.ProductName;
 
 public class ProductStock {
 

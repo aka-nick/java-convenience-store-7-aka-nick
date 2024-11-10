@@ -1,10 +1,10 @@
 package store.storeapp.model;
 
-import store.storeapp.model.value.Date;
-import store.storeapp.model.value.Price;
-import store.storeapp.model.value.ProductName;
-import store.storeapp.model.value.Promotion;
-import store.storeapp.model.value.Quantity;
+import store.storeapp.value.Date;
+import store.storeapp.value.Price;
+import store.storeapp.value.ProductName;
+import store.storeapp.value.Promotion;
+import store.storeapp.value.Quantity;
 
 public final class Product {
 

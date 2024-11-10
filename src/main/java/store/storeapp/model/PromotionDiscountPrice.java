@@ -1,7 +1,7 @@
 package store.storeapp.model;
 
-import store.storeapp.model.value.Price;
-import store.storeapp.model.value.Won;
+import store.storeapp.value.Price;
+import store.storeapp.value.Won;
 
 public final class PromotionDiscountPrice {
 
