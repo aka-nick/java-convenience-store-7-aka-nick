@@ -76,4 +76,20 @@ class PromotionTest {
         assertThat(promotion.getQuantityProvidedAtOnce()).isEqualTo(Quantity.of(3));
     }
 
+    @DisplayName("프로모션은 동등비교 가능하다")
+    @Test
+    void testEquals() {
+        assertThat(Promotion.of(null, null, null))
+                .isEqualTo(Promotion.empty());
+
+        assertThat(Promotion.of(
+                PromotionName.of("테스트프로모션"),
+                PromotionQuantity.of(Quantity.of(2), Quantity.of(1)),
+                Period.of("2020-01-01", "2030-01-01")))
+                .isEqualTo(Promotion.of(
+                        PromotionName.of("테스트프로모션"),
+                        PromotionQuantity.of(Quantity.of(2), Quantity.of(1)),
+                        Period.of("2020-01-01", "2030-01-01")));
+    }
+
 }
