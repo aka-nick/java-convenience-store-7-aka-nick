@@ -22,4 +22,8 @@ public record Promotion(PromotionName name, PromotionQuantity quantity, Period p
         return quantity.calculateQuantityProvidedAtOnce();
     }
 
+    public String getName() {
+        return name.getName();
+    }
+
 }

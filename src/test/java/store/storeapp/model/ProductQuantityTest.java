@@ -30,7 +30,7 @@ class ProductQuantityTest {
 
         assertThat(productQuantity.minus(3)).isEqualTo(7);
 
-        assertThatCode(() -> productQuantity.minus(productQuantity.get() + 1))
+        assertThatCode(() -> productQuantity.minus(productQuantity.intValue() + 1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

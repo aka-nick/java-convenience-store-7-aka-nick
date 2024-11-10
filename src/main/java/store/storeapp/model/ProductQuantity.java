@@ -10,15 +10,17 @@ public final class ProductQuantity {
         this.quantity = quantity;
     }
 
-    public Integer get() {
-        return quantity.get();
+    public Quantity add(Quantity other) {
+        thrownByNullParams(other);
+        quantity = quantity.add(other);
+        return quantity;
     }
 
-    public ProductQuantity minus(Quantity purcharsedQuantity) {
-        thrownByNullParams(purcharsedQuantity);
-        thrownByUnableMinusCalculation(purcharsedQuantity.get());
-        quantity = Quantity.of(quantity.get() - purcharsedQuantity.get());
-        return this;
+    public Quantity minus(Quantity other) {
+        thrownByNullParams(other);
+        thrownByUnableMinusCalculation(other.get());
+        this.quantity = Quantity.of(this.quantity.get() - other.get());
+        return quantity;
     }
 
     public Integer minus(Integer purchasedQuantity) {
@@ -32,11 +34,19 @@ public final class ProductQuantity {
         return quantity.isGreaterThan(other) || quantity.equals(other);
     }
 
-    private static void thrownByNullParams(Quantity purchasedQuantity) {
-        if (purchasedQuantity == null) {
+    public Quantity get() {
+        return quantity;
+    }
+
+    public Integer intValue() {
+        return quantity.get();
+    }
+
+    private static void thrownByNullParams(Quantity purchased) {
+        if (purchased == null) {
             ProductQuantityException.NULL_CANNOT_BE_ENTERED.raise();
         }
-        thrownByNullParams(purchasedQuantity.get());
+        thrownByNullParams(purchased.get());
     }
 
     private static void thrownByNullParams(Integer purchasedQuantity) {
