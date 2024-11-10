@@ -59,6 +59,17 @@ public class Price implements Comparable<Price> {
         return new Price(amount.multiply(other.amount));
     }
 
+    public Price multiply(long other) {
+        return new Price(amount.multiply(BigInteger.valueOf(other)));
+    }
+
+    public Price multiply(Quantity other) {
+        if (other == null) {
+            PriceException.NULL_CANNOT_BE_ENTERED.raise();
+        }
+        return new Price(amount.multiply(BigInteger.valueOf(other.get())));
+    }
+
     public BigInteger get() {
         return amount;
     }
