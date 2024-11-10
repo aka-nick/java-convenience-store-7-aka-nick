@@ -26,6 +26,13 @@ public final class Product {
         this.promotion = promotion;
     }
 
+    public void thrownByOutOfStock(Quantity purchased) {
+        Quantity total = regularQuantity.add(promotionQuantity.get());
+        if (purchased.isGreaterThan(total)) {
+            ProductException.OUT_OF_STOCK.raise();
+        }
+    }
+
     public boolean isApplicablePromotion(Quantity purchased) {
         return promotion.isPromotionPeriod(Date.now()) &&
                 promotion.isSatisfyForPromotionRequiredQuantity(purchased) &&
@@ -51,6 +58,27 @@ public final class Product {
 
     public Promotion promotion() {
         return promotion;
+    }
+
+    private enum ProductException {
+
+        OUT_OF_STOCK(() -> {
+            throw new IllegalArgumentException("재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
+        }),
+        NULL_CANNOT_BE_ENTERED(() -> {
+            throw new IllegalArgumentException("null이 입력될 수 없습니다.");
+        });
+
+        private final Runnable thrown;
+
+        ProductException(Runnable thrown) {
+            this.thrown = thrown;
+        }
+
+        private void raise() {
+            this.thrown.run();
+        }
+
     }
 
 }
