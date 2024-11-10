@@ -39,7 +39,7 @@ public record BuyProduct(ProductName name, Quantity quantity, Price price) imple
     private enum BuyProductException {
 
         CANNOT_BE_INITIALIZED_TO_NULL_VALUE(() -> {
-            throw new IllegalArgumentException("증정상품은 null로 초기화할 수 없습니다.");
+            throw new IllegalArgumentException("구매한 상품은 null로 초기화할 수 없습니다.");
         }),
         NULL_CANNOT_BE_ENTERED(() -> {
             throw new IllegalArgumentException("null이 입력될 수 없습니다.");

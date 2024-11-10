@@ -6,14 +6,14 @@ import java.util.stream.Stream;
 
 public final class BuyProducts {
 
-    private final Set<BuyProduct> giftProducts;
+    private final Set<BuyProduct> buyProducts;
 
     public BuyProducts() {
-        this.giftProducts = new TreeSet<>();
+        this.buyProducts = new TreeSet<>();
     }
 
-    public BuyProducts(Set<BuyProduct> giftProducts) {
-        this.giftProducts = giftProducts;
+    public BuyProducts(Set<BuyProduct> buyProducts) {
+        this.buyProducts = buyProducts;
     }
 
     public static BuyProducts of() {
@@ -28,7 +28,7 @@ public final class BuyProducts {
     }
 
     public void addOrUpdate(BuyProduct nowBuy) {
-        BuyProduct updatedGift = giftProducts.stream()
+        BuyProduct updatedGift = buyProducts.stream()
                 .filter(gift -> gift.equals(nowBuy))
                 .findFirst()
                 .map(exists -> BuyProduct.of(
@@ -36,18 +36,18 @@ public final class BuyProducts {
                         exists.quantity().add(nowBuy.quantity()),
                         exists.price().add(nowBuy.price())))
                 .orElse(nowBuy);
-        giftProducts.remove(updatedGift);
-        giftProducts.add(updatedGift);
+        buyProducts.remove(updatedGift);
+        buyProducts.add(updatedGift);
     }
 
     public Stream<BuyProduct> stream() {
-        return giftProducts.stream();
+        return buyProducts.stream();
     }
 
     private enum BuyProductsException {
 
         CANNOT_BE_INITIALIZED_TO_NULL_VALUE(() -> {
-            throw new IllegalArgumentException("증정상품목록은 null로 초기화할 수 없습니다.");
+            throw new IllegalArgumentException("구매한 상품 목록은 null로 초기화할 수 없습니다.");
         }),
         NULL_CANNOT_BE_ENTERED(() -> {
             throw new IllegalArgumentException("null이 입력될 수 없습니다.");
