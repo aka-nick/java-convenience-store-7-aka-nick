@@ -1,5 +1,7 @@
 package store.storeapp.model.value;
 
+import java.util.Objects;
+
 public class Period {
 
     private final Date fromDate;
@@ -25,6 +27,23 @@ public class Period {
 
     public boolean include(Date now) {
         return fromDate.isBeforeThanOrSame(now) && now.isBeforeThanOrSame(toDate);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Period period = (Period) o;
+        return Objects.equals(fromDate, period.fromDate) && Objects.equals(toDate, period.toDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fromDate, toDate);
     }
 
     private enum PeriodException {
