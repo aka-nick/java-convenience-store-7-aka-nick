@@ -30,6 +30,10 @@ public class Quantity implements Comparable<Quantity> {
         return new Quantity(this.quantity + other.quantity);
     }
 
+    public Quantity minus(Quantity other) {
+        return new Quantity(this.quantity - other.quantity);
+    }
+
     public boolean isGreaterThan(Quantity other) {
         return this.quantity > other.quantity;
     }
