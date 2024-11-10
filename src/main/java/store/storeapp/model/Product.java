@@ -40,6 +40,11 @@ public final class Product {
                         promotion.getQuantityProvidedAtOnce());
     }
 
+    public boolean isTotalStockGreaterThanOrEqualTo(Quantity requiredQuantity) {
+        Quantity totalStock = regularQuantity.add(promotionQuantity.get());
+        return 0 <= totalStock.compareTo(requiredQuantity);
+    }
+
     public ProductName name() {
         return name;
     }
