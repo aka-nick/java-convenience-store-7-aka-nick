@@ -1,15 +1,10 @@
 package store.storeapp.model;
 
 import store.storeapp.value.Price;
-import store.storeapp.value.Won;
 
 public final class PromotionDiscountPrice {
 
-    private Price price;
-
-    public PromotionDiscountPrice() {
-        this.price = Price.of(0);
-    }
+    private final Price price;
 
     public PromotionDiscountPrice(Price price) {
         if (price == null) {
@@ -18,20 +13,12 @@ public final class PromotionDiscountPrice {
         this.price = price;
     }
 
-    public Price minus(Price other) {
-        if (other == null) {
-            PromotionDiscountPriceException.NULL_CANNOT_BE_ENTERED.raise();
-        }
-        price = price.minus(other);
-        return price;
+    public static PromotionDiscountPrice from(Price price) {
+        return new PromotionDiscountPrice(price);
     }
 
-    public Price minus(Won other) {
-        if (other == null) {
-            PromotionDiscountPriceException.NULL_CANNOT_BE_ENTERED.raise();
-        }
-        price = price.minus(Price.of(other));
-        return price;
+    public long longValue() {
+        return price.longValue();
     }
 
     @Override

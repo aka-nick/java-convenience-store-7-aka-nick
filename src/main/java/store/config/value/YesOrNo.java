@@ -1,4 +1,4 @@
-package store.storeapp.value;
+package store.config.value;
 
 public enum YesOrNo {
 
@@ -22,4 +22,7 @@ public enum YesOrNo {
         throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해 주세요.");
     }
 
+    public boolean judge() {
+        return this.value;
+    }
 }

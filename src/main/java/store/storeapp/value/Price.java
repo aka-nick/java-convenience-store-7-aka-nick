@@ -70,6 +70,17 @@ public class Price implements Comparable<Price> {
         return new Price(amount.multiply(BigInteger.valueOf(other.get())));
     }
 
+    public Price divide(long other) {
+        return new Price(amount.divide(BigInteger.valueOf(other)));
+    }
+
+    public boolean isGreaterThan(Price other) {
+        if (other == null) {
+            PriceException.NULL_CANNOT_BE_ENTERED.raise();
+        }
+        return 0 < amount.compareTo(other.amount);
+    }
+
     public BigInteger get() {
         return amount;
     }

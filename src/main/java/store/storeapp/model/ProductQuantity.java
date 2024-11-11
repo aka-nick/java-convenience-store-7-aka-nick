@@ -19,7 +19,7 @@ public final class ProductQuantity {
     public Quantity minus(Quantity other) {
         thrownByNullParams(other);
         thrownByUnableMinusCalculation(other.get());
-        this.quantity = Quantity.of(this.quantity.get() - other.get());
+        quantity = Quantity.of(quantity.get() - other.get());
         return quantity;
     }
 
@@ -32,6 +32,16 @@ public final class ProductQuantity {
 
     public boolean isGreaterThanOrEqualTo(Quantity other) {
         return quantity.isGreaterThan(other) || quantity.equals(other);
+    }
+
+    public boolean isGreaterThan(Quantity other) {
+        return quantity.isGreaterThan(other);
+    }
+
+    public Quantity getRemainingQuantityByMinusAsPossible(Quantity pickQuantity) {
+        Quantity differenceBetween = pickQuantity.minus(quantity);
+        quantity.minus(quantity);
+        return differenceBetween;
     }
 
     public Quantity get() {
@@ -64,6 +74,16 @@ public final class ProductQuantity {
     @Override
     public String toString() {
         return quantity.toString();
+    }
+
+    public Quantity getRemainingQuantityAfterDeduction(Quantity pickQuantity) {
+        if (isGreaterThanOrEqualTo(pickQuantity)) {
+            quantity = quantity.minus(pickQuantity);
+            return Quantity.ZERO;
+        }
+        Quantity remaining = pickQuantity.minus(quantity);
+        quantity = Quantity.ZERO;
+        return remaining;
     }
 
     private enum ProductQuantityException {

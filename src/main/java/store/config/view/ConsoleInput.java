@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import store.config.value.YesOrNo;
 
 public final class ConsoleInput {
 
@@ -62,6 +63,10 @@ public final class ConsoleInput {
         return readStrings(delimiter).stream()
                 .map((String string) -> parseIntegerFrom(string, min, max))
                 .toList();
+    }
+
+    public static YesOrNo readYesOrNo() {
+        return YesOrNo.findByRepresentation(readString());
     }
 
     private static Integer parseIntegerFrom(String string, int min, int max) {

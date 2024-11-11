@@ -1,5 +1,6 @@
 package store.storeapp.value;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
@@ -20,7 +21,7 @@ public record Date(LocalDate date) implements Comparable<Date> {
     }
 
     public static Date now() {
-        return new Date(LocalDate.now());
+        return new Date(DateTimes.now().toLocalDate());
     }
 
     public boolean isAfterThan(Date other) {

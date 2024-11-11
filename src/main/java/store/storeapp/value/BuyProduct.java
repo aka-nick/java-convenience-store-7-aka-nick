@@ -8,7 +8,11 @@ public record BuyProduct(ProductName name, Quantity quantity, Price price) imple
         if (name == null || quantity == null || price == null) {
             BuyProductException.CANNOT_BE_INITIALIZED_TO_NULL_VALUE.raise();
         }
-        return new BuyProduct(name, quantity, price);
+        return new BuyProduct(name, Quantity.of(quantity.get()), Price.of(price.longValue()));
+    }
+
+    public Price getTotalPrice() {
+        return price.multiply(quantity);
     }
 
     @Override

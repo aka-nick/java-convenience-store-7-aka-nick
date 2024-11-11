@@ -37,8 +37,24 @@ public class Quantity implements Comparable<Quantity> {
         return new Quantity(this.quantity - other.quantity);
     }
 
+    public Quantity multiply(Quantity other) {
+        return new Quantity(this.quantity * other.quantity);
+    }
+
+    public Quantity divide(Quantity other) {
+        return new Quantity(this.quantity / other.quantity);
+    }
+
+    public Quantity remainder(Quantity other) {
+        return new Quantity(this.quantity % other.quantity);
+    }
+
     public boolean isGreaterThan(Quantity other) {
         return this.quantity > other.quantity;
+    }
+
+    public Long longValue() {
+        return quantity.longValue();
     }
 
     @Override

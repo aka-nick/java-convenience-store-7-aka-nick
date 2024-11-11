@@ -1,37 +1,57 @@
 package store.storeapp.model;
 
+import store.config.value.YesOrNo;
 import store.storeapp.value.Price;
-import store.storeapp.value.Won;
 
 public final class MembershipDiscountPrice {
 
-    private Price price;
+    private static final Long DISCOUNT_PERCENTAGE = 30L;
 
-    public MembershipDiscountPrice() {
-        this.price = Price.of(0);
+    private final Price price;
+
+    private MembershipDiscountPrice() {
+        this(0);
     }
 
-    public MembershipDiscountPrice(Price price) {
+    private MembershipDiscountPrice(Integer price) {
+        if (price == null) {
+            MembershipDiscountPriceException.CANNOT_BE_INITIALIZED_TO_NULL_VALUE.raise();
+        }
+        this.price = Price.of(price);
+    }
+
+    private MembershipDiscountPrice(Price price) {
         if (price == null) {
             MembershipDiscountPriceException.CANNOT_BE_INITIALIZED_TO_NULL_VALUE.raise();
         }
         this.price = price;
     }
 
-    public Price minus(Price other) {
-        if (other == null) {
+    public static MembershipDiscountPrice from(Product targetProduct, YesOrNo answerForMembershipDiscount) {
+        thrownByNullParams(targetProduct, answerForMembershipDiscount);
+
+        if (!targetProduct.promotion().isEmpty()) {
+            return new MembershipDiscountPrice(0);
+        }
+        if (!answerForMembershipDiscount.judge()) {
+            return new MembershipDiscountPrice(0);
+        }
+        return new MembershipDiscountPrice(
+                targetProduct.price().divide(100L).multiply(DISCOUNT_PERCENTAGE));
+    }
+
+    private static void thrownByNullParams(Product targetProduct, YesOrNo answerForMembershipDiscount) {
+        if (targetProduct.price() == null || answerForMembershipDiscount == null) {
             MembershipDiscountPriceException.NULL_CANNOT_BE_ENTERED.raise();
         }
-        price = price.minus(other);
+    }
+
+    public Price price() {
         return price;
     }
 
-    public Price minus(Won other) {
-        if (other == null) {
-            MembershipDiscountPriceException.NULL_CANNOT_BE_ENTERED.raise();
-        }
-        price = price.minus(Price.of(other));
-        return price;
+    public long longValue() {
+        return price.longValue();
     }
 
     @Override

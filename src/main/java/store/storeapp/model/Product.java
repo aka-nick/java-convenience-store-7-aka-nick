@@ -5,6 +5,7 @@ import store.storeapp.value.Price;
 import store.storeapp.value.ProductName;
 import store.storeapp.value.Promotion;
 import store.storeapp.value.Quantity;
+import store.storeapp.value.QuantityOfPaidAndProvided;
 
 public final class Product {
 
@@ -33,16 +34,83 @@ public final class Product {
         }
     }
 
+    public boolean isPromotionPeriod(Date standardDate) {
+        return !promotion.isEmpty() && promotion.isPromotionPeriod(standardDate);
+    }
+
+    // TODO: 불필요한 메서드, 추후 제거해야 함. 아래 메서드로 전환함.
     public boolean isApplicablePromotion(Quantity purchased) {
-        return promotion.isPromotionPeriod(Date.now()) &&
+        return isPromotionPeriod(Date.now()) &&
                 promotion.isSatisfyForPromotionRequiredQuantity(purchased) &&
                 promotionQuantity.isGreaterThanOrEqualTo(
                         promotion.getQuantityProvidedAtOnce());
     }
 
+    public boolean isApplicablePromotionButNotReceived(Date standardDate, Quantity pickedQuantity) {
+        if (!isPromotionPeriod(standardDate)) {
+            return false;
+        }
+        Quantity requiredAndProvided = promotion.quantity().calculateQuantityProvidedAtOnce();
+        Quantity candidateQuantity = pickedQuantity.remainder(requiredAndProvided);
+        return candidateQuantity.equals(promotion.quantity().requiredForApply());
+    }
+
+    public boolean isApplicablePromotionButLackOfStock(Date standardDate, Quantity pickedQuantity) {
+        if (!isPromotionPeriod(standardDate)) {
+            return false;
+        }
+        return pickedQuantity.isGreaterThan(getMaxQuantityOfProvidedAvailable());
+    }
+
+    public Quantity calculateQuantityOfPromotionNotAvailable(Quantity pickedQuantity) {
+        return pickedQuantity.minus(getMaxQuantityOfProvidedAvailable());
+    }
+
     public boolean isTotalStockGreaterThanOrEqualTo(Quantity requiredQuantity) {
         Quantity totalStock = regularQuantity.add(promotionQuantity.get());
         return 0 <= totalStock.compareTo(requiredQuantity);
+    }
+
+    public Quantity getMaxQuantityOfProvidedAvailable() {
+        Quantity requiredAndProvided = promotion.quantity().calculateQuantityProvidedAtOnce();
+        Quantity promotionStockQuantity = promotionQuantity.get();
+        return promotionStockQuantity.divide(requiredAndProvided).multiply(requiredAndProvided);
+    }
+
+    public QuantityOfPaidAndProvided calculatePaidAndProvided(Quantity pickQuantity, Date standardDate) {
+        if (isPromotionPeriod(standardDate)) {
+            return calculatePaidAndProvidedInPromotion(pickQuantity);
+        }
+        return new QuantityOfPaidAndProvided(pickQuantity, Quantity.ZERO);
+    }
+
+    public void deductionQuantity(Quantity pickQuantity) {
+        Quantity remainingQuantity = promotionQuantity.getRemainingQuantityAfterDeduction(pickQuantity);
+        regularQuantity.minus(remainingQuantity);
+    }
+
+    private QuantityOfPaidAndProvided calculatePaidAndProvidedInPromotion(Quantity pickQuantity) {
+        if (isPromotionApplyInAnyQuantity(pickQuantity)) {
+            return new QuantityOfPaidAndProvided(
+                    countPromotionBundle(pickQuantity).multiply(promotion.quantity().requiredForApply()),
+                    countPromotionBundle(pickQuantity).multiply(promotion.quantity().providedByPromotion()));
+        }
+        return new QuantityOfPaidAndProvided(
+                calculateQuantityOfPromotionNotAvailable(pickQuantity),
+                getMaxQuantityOfProvidedAvailable());
+    }
+
+    private boolean isPromotionApplyInAnyQuantity(Quantity pickQuantity) {
+        return Quantity.ZERO.equals(
+                pickQuantity.remainder(promotion.quantity().calculateQuantityProvidedAtOnce()));
+    }
+
+    private Quantity countPromotionBundle(Quantity pickQuantity) {
+        return pickQuantity.divide(promotion.quantity().calculateQuantityProvidedAtOnce());
+    }
+
+    private void outFromStock(Quantity quantity) {
+
     }
 
     public ProductName name() {
