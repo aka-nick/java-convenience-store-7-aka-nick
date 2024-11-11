@@ -23,19 +23,4 @@ class MembershipDiscountPriceTest {
                 .doesNotThrowAnyException();
     }
 
-    // TODO: 삭제할 테스트 케이스 임시보관
-//    @DisplayName("멤버십할인은 뺄셈 연산이 가능하다")
-//    @Test
-//    void minus() {
-//        assertThat(new MembershipDiscountPrice(0).minus(Price.of(100)))
-//                .isEqualTo(Price.of(-100));
-//        assertThat(new MembershipDiscountPrice(0).minus(Won.of(100)))
-//                .isEqualTo(Price.of(-100));
-//
-//        assertThatCode(() -> new MembershipDiscountPrice(0).minus((Price) null))
-//                .isInstanceOf(IllegalArgumentException.class);
-//        assertThatCode(() -> new MembershipDiscountPrice(0).minus((Won) null))
-//                .isInstanceOf(IllegalArgumentException.class);
-//    }
-
 }

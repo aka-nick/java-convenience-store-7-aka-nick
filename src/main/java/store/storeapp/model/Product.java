@@ -38,14 +38,6 @@ public final class Product {
         return !promotion.isEmpty() && promotion.isPromotionPeriod(standardDate);
     }
 
-    // TODO: 불필요한 메서드, 추후 제거해야 함. 아래 메서드로 전환함.
-    public boolean isApplicablePromotion(Quantity purchased) {
-        return isPromotionPeriod(Date.now()) &&
-                promotion.isSatisfyForPromotionRequiredQuantity(purchased) &&
-                promotionQuantity.isGreaterThanOrEqualTo(
-                        promotion.getQuantityProvidedAtOnce());
-    }
-
     public boolean isApplicablePromotionButNotReceived(Date standardDate, Quantity pickedQuantity) {
         if (!isPromotionPeriod(standardDate)) {
             return false;
